@@ -1,54 +1,48 @@
-import React from "react";
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-const MovieUpdate = () => {
+const AddMovie = props => {
+	const movie = {
+		id: Date.now(),
+		title: "",
+		director: "",
+		metascore: "",
+		stars: [],
+	};
+	const [addMovie, setAddMovie] = useState(movie);
 
-	const [movie, setMovie] = useState(initialItem);
-	const { id } = useParams();
-
-
-	useEffect(() => {
-		axios
-			.get(`http://localhost:5000/api/movies/${id}`)
-			.then(response => {
-				console.log(response)
-				setMovie(response.data)
-			})
-			.catch(err => {
-				console.log(err)
-			})
-	}, [id])
-
-	const changeHandler = ev => {
-		ev.persist();
+	const handleChange = ev => {
 		let value = ev.target.value;
-		if (ev.target.name === 'metascore') {
+		if (ev.target.name === "metascore") {
 			value = parseInt(value, 10);
 		}
 
-		setMovie({
-			...movie,
-			[ev.target.name]: value
+		setAddMovie({
+			...addMovie,
+			[ev.target.name]: value,
 		});
 	};
 
 	const handleStars = event => {
-		setMovie({
-			...movie,
+		setAddMovie({
+			...addMovie,
 			stars: [event.target.value],
-		})
-	}
+		});
+	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		setAddMovie({ ...addMovie });
 		axios
-			.put(`http://localhost:5000/api/movies/${id}`, movie)
+			.post("http://localhost:5000/api/movies/", addMovie)
 			.then(res => {
-				setMovie(initialItem)
-				props.history.push('/')
+				console.log(res.data);
+				setAddMovie(movie);
+				props.history.push("/");
 			})
-			.catch(err => console.log(err))
+			.catch(error => {
+				console.log("Whoops go back, thats an error!", error);
+			});
 	};
 
 	return (
@@ -81,12 +75,11 @@ const MovieUpdate = () => {
 					type="text"
 					name="Stars"
 					onChange={handleStars}
-					value={addMovie.stars}
+				  value={addMovie.stars}
 				/>
 				<button>Add Movie</button>
 			</form>
 		</div>
 	);
 };
-
-export default MovieUpdate;
+export default AddMovie;

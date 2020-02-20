@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
+
+// IMPORT CONTEXT
+import MovieContext from "./contexts/MovieContext";
+
+// IMPORT APP COMPONENTS
 import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
 import MovieUpdate from "./Movies/MovieUpdate";
 
 const App = () => {
-  const [savedList, setSavedList] = useState([]);
+
+  const movieItem = {
+    title:      "",
+    director:   "",
+    metascore:  "",
+    stars:      [],
+  };
+
+  const [movie, setMovie]           = useState(movieItem);
+  const [savedList, setSavedList]   = useState([]);
 
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
   };
 
   return (
-    <>
+    <MovieContext.Provider value={{movie, setMovie, savedList, setSavedList, movieItem}}>
       <SavedList list={savedList} />
       <Route exact path="/" component={MovieList} />
       <Route
@@ -31,7 +45,7 @@ const App = () => {
           />;
         }}
       />
-    </>
+    </MovieContext.Provider>
   );
 };
 
