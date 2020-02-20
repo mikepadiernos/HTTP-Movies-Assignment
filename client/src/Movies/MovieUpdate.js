@@ -13,7 +13,7 @@ const MovieUpdate = props => {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/api/movies/${id}`)
+			.get(`http://localhost:5001/api/movies/${id}`)
 			.then(response => {
 				console.log("Response, Update: ", response);
 				setMovie(response.data)
@@ -36,22 +36,22 @@ const MovieUpdate = props => {
 		});
 	};
 
-	const handleStars = event => {
+	const handleStarsUpdate = event => {
 		setMovie({
 			...movie,
-			stars: [event.target.value],
+			stars: event.target.value.split(","),
 		})
-	}
+	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
 		axios
-			.put(`http://localhost:5000/api/movies/${id}`, movie)
-			.then(res => {
-				setMovie(movieItem)
+			.put(`http://localhost:5001/api/movies/${id}`, movie)
+			.then(response => {
+				setMovie(movieItem);
 				props.history.push('/')
 			})
-			.catch(err => console.log(err))
+			.catch(error => console.log(error))
 	};
 
 	return (
@@ -59,33 +59,43 @@ const MovieUpdate = props => {
 			<h2 className="form">Update Movie</h2>
 			<form onSubmit={handleSubmit} className="form">
 				<label>Title</label>
+				<br />
 				<input
 					name="title"
 					type="text"
 					onChange={handleChange}
 					value={movie.title}
 				/>
+				<br />
 				<label>Director</label>
+				<br />
 				<input
 					name="director"
 					type="text"
 					onChange={handleChange}
 					value={movie.director}
 				/>
+				<br />
 				<label>Metascore</label>
+				<br />
 				<input
 					name="metascore"
 					type="text"
 					onChange={handleChange}
 					value={movie.metascore}
 				/>
+				<br />
 				<label>Stars</label>
-				<input
-					type="text"
-					name="Stars"
-					onChange={handleStars}
+				<br />
+				<textarea
+					name="stars"
+					id="stars"
+					cols="30"
+					rows="10"
+					onChange={handleStarsUpdate}
 					value={movie.stars}
 				/>
+				<br />
 				<button>Submit</button>
 			</form>
 		</div>

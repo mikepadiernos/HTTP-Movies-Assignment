@@ -31,7 +31,7 @@ const MovieAdd = props => {
 		e.preventDefault();
 		setMovie({ ...movie });
 		axios
-			.post("http://localhost:5000/api/movies/", movie)
+			.post("http://localhost:5001/api/movies/", movie)
 			.then(response => {
 				console.log("Response, Add: ", response.data);
 				setMovie(movieItem);

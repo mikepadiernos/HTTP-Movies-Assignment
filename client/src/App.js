@@ -30,34 +30,36 @@ const App = () => {
   return (
     <MovieContext.Provider value={{movie, setMovie, savedList, setSavedList, movieItem}}>
       <SavedList list={savedList} />
-      <Route exact path="/" component={MovieList} />
-      <Route
-        path="/movies/:id"
-        render={props => {
-          return <Movie
-            {...props}
-            addToSavedList={addToSavedList}
-          />
-        }}
-      />
-      <Route
-        path="/movies/:id/update"
-        render={props => {
-          return <MovieUpdate
-            {...props}
-            addToSavedList={addToSavedList}
-          />
-        }}
-      />
-      <Route
-        path="/movies/add"
-        render={props => {
-          return <MovieAdd
-            {...props}
-            addToSavedList={addToSavedList}
-          />
-        }}
-      />
+      <section className="container">
+        <Route exact path="/" component={MovieList} />
+        <Route
+          path="/movies/:id"
+          render={props => {
+            return <Movie
+              {...props}
+              addToSavedList={addToSavedList}
+            />
+          }}
+        />
+        <Route
+          path="/movies/:id/update"
+          render={props => {
+            return <MovieUpdate
+              {...props}
+              addToSavedList={addToSavedList}
+            />
+          }}
+        />
+        <Route
+          path="/movies/add"
+          render={props => {
+            return <MovieAdd
+              {...props}
+              addToSavedList={addToSavedList}
+            />
+          }}
+        />
+      </section>
     </MovieContext.Provider>
   );
 };
