@@ -39,7 +39,7 @@ const MovieUpdate = props => {
 	const handleStarsUpdate = event => {
 		setMovie({
 			...movie,
-			stars: event.target.value.split(","),
+			stars: event.target.value.split(",\n"),
 		})
 	};
 
@@ -93,7 +93,7 @@ const MovieUpdate = props => {
 					cols="30"
 					rows="10"
 					onChange={handleStarsUpdate}
-					value={movie.stars}
+					value={movie.stars.map(r=>r).join(`,\n`)}
 				/>
 				<br />
 				<button>Submit</button>
