@@ -47,7 +47,7 @@ const MovieUpdate = props => {
 		e.preventDefault();
 		axios
 			.put(`http://localhost:5001/api/movies/${id}`, movie)
-			.then(response => {
+			.then(() => {
 				setMovie(movieItem);
 				props.history.push('/')
 			})
@@ -93,7 +93,7 @@ const MovieUpdate = props => {
 					cols="30"
 					rows="10"
 					onChange={handleStarsUpdate}
-					value={movie.stars.map(r=>r).join(`,\n`)}
+					value={movie.stars.map(row=>row).join(`,\n`)}
 				/>
 				<br />
 				<button>Submit</button>
