@@ -6,25 +6,25 @@ import MovieContext from "../contexts/MovieContext";
 
 const MovieAdd = props => {
 
-	const {movie, setMovie, savedList, setSavedList, movieItem}   = useContext(MovieContext);
+	const {movie, setMovie, movieItem}   = useContext(MovieContext);
 
-	const handleChange = ev => {
-		let value = ev.target.value;
-		if (ev.target.name === "metascore") {
+	const handleChange = event => {
+		let value = event.target.value;
+		if (event.target.name === "metascore") {
 			value = parseInt(value, 10);
 		}
 
 		setMovie({
 			...movie,
-			[ev.target.name]: value,
+			[event.target.name]: value,
 		});
 	};
 
-	const handleStars = event => {
+	const handleStarsAdd = event => {
 		setMovie({
 			...movie,
-			stars: [event.target.value],
-		});
+			stars: event.target.value.split(",\n"),
+		})
 	};
 
 	const handleSubmit = e => {
@@ -47,33 +47,43 @@ const MovieAdd = props => {
 			<h2 className="form">Add Movie</h2>
 			<form onSubmit={handleSubmit} className="form">
 				<label>Title</label>
+				<br/>
 				<input
 					name="title"
 					type="text"
 					onChange={handleChange}
 					value={movie.title}
 				/>
+				<br/>
 				<label>Director</label>
+				<br/>
 				<input
 					name="director"
 					type="text"
 					onChange={handleChange}
 					value={movie.director}
 				/>
+				<br/>
 				<label>Metascore</label>
+				<br/>
 				<input
 					name="metascore"
 					type="text"
 					onChange={handleChange}
 					value={movie.metascore}
 				/>
+				<br/>
 				<label>Stars</label>
-				<input
-					type="text"
-					name="Stars"
-					onChange={handleStars}
-				  value={movie.stars}
+				<br/>
+				<textarea
+					name="stars"
+					id="stars"
+					cols="30"
+					rows="10"
+					onChange={handleStarsAdd}
+					value={movie.stars.map(row=>row).join(`,\n`)}
 				/>
+				<br/>
 				<button>Submit</button>
 			</form>
 		</div>

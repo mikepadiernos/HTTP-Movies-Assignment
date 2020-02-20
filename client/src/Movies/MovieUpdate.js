@@ -7,7 +7,7 @@ import MovieContext from "../contexts/MovieContext";
 
 const MovieUpdate = props => {
 
-	const {movie, setMovie, savedList, setSavedList, movieItem}   = useContext(MovieContext);
+	const {movie, setMovie, movieItem}   = useContext(MovieContext);
 	const { id } = useParams();
 
 
