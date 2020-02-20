@@ -13,7 +13,10 @@ body {
   padding: 1rem;
   cursor: pointer;
   position: relative;
-  margin: 1rem auto;
+}
+
+.movie-card h2 {
+  margin: 0 0 0.83em;
 }
 
 .movie-director {
@@ -74,4 +77,12 @@ body {
 .movie-warning {
   color: red;
   text-align: center;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: calc(75% + 32px);
+  margin: 0 auto;
 }
