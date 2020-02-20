@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from 'react';
 import axios from "axios";
 
-const AddMovie = props => {
-	const movie = {
-		id: Date.now(),
-		title: "",
-		director: "",
-		metascore: "",
-		stars: [],
-	};
-	const [addMovie, setAddMovie] = useState(movie);
+// IMPORT CONTEXT: MovieContext
+import MovieContext from "../contexts/MovieContext";
+
+const MovieAdd = props => {
+
+	const {movie, setMovie, savedList, setSavedList, movieItem}   = useContext(MovieContext);
 
 	const handleChange = ev => {
 		let value = ev.target.value;
@@ -17,31 +14,31 @@ const AddMovie = props => {
 			value = parseInt(value, 10);
 		}
 
-		setAddMovie({
-			...addMovie,
+		setMovie({
+			...movie,
 			[ev.target.name]: value,
 		});
 	};
 
 	const handleStars = event => {
-		setAddMovie({
-			...addMovie,
+		setMovie({
+			...movie,
 			stars: [event.target.value],
 		});
 	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		setAddMovie({ ...addMovie });
+		setMovie({ ...movie });
 		axios
-			.post("http://localhost:5000/api/movies/", addMovie)
-			.then(res => {
-				console.log(res.data);
-				setAddMovie(movie);
+			.post("http://localhost:5000/api/movies/", movie)
+			.then(response => {
+				console.log("Response, Add: ", response.data);
+				setMovie(movieItem);
 				props.history.push("/");
 			})
 			.catch(error => {
-				console.log("Whoops go back, thats an error!", error);
+				console.log("Error adding movie!", error);
 			});
 	};
 
@@ -54,32 +51,32 @@ const AddMovie = props => {
 					name="title"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.title}
+					value={movie.title}
 				/>
 				<label>Director</label>
 				<input
 					name="director"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.director}
+					value={movie.director}
 				/>
 				<label>Metascore</label>
 				<input
 					name="metascore"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.metascore}
+					value={movie.metascore}
 				/>
 				<label>Stars</label>
 				<input
 					type="text"
 					name="Stars"
 					onChange={handleStars}
-				  value={addMovie.stars}
+				  value={movie.stars}
 				/>
-				<button>Add Movie</button>
+				<button>Submit</button>
 			</form>
 		</div>
 	);
 };
-export default AddMovie;
+export default MovieAdd;

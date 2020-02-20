@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Route } from "react-router-dom";
+import React, { useState }  from "react";
+import { Route }            from "react-router-dom";
 
 // IMPORT CONTEXT
-import MovieContext from "./contexts/MovieContext";
+import MovieContext         from "./contexts/MovieContext";
 
 // IMPORT APP COMPONENTS
-import SavedList from "./Movies/SavedList";
-import MovieList from "./Movies/MovieList";
-import Movie from "./Movies/Movie";
-import MovieUpdate from "./Movies/MovieUpdate";
+import SavedList            from "./Movies/SavedList";
+import MovieList            from "./Movies/MovieList";
+import Movie                from "./Movies/Movie";
+import MovieUpdate          from "./Movies/MovieUpdate";
+import MovieAdd             from "./Movies/MovieAdd";
 
 const App = () => {
 
@@ -33,7 +34,10 @@ const App = () => {
       <Route
         path="/movies/:id"
         render={props => {
-          return <Movie {...props} addToSavedList={addToSavedList} />;
+          return <Movie
+            {...props}
+            addToSavedList={addToSavedList}
+          />
         }}
       />
       <Route
@@ -42,7 +46,16 @@ const App = () => {
           return <MovieUpdate
             {...props}
             addToSavedList={addToSavedList}
-          />;
+          />
+        }}
+      />
+      <Route
+        path="/movies/add"
+        render={props => {
+          return <MovieAdd
+            {...props}
+            addToSavedList={addToSavedList}
+          />
         }}
       />
     </MovieContext.Provider>

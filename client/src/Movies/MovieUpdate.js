@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const MovieUpdate = () => {
+// IMPORT CONTEXT: MovieContext
+import MovieContext from "../contexts/MovieContext";
 
-	const [movie, setMovie] = useState(initialItem);
+const MovieUpdate = props => {
+
+	const {movie, setMovie, savedList, setSavedList, movieItem}   = useContext(MovieContext);
 	const { id } = useParams();
 
 
@@ -12,24 +15,24 @@ const MovieUpdate = () => {
 		axios
 			.get(`http://localhost:5000/api/movies/${id}`)
 			.then(response => {
-				console.log(response)
+				console.log("Response, Update: ", response);
 				setMovie(response.data)
 			})
-			.catch(err => {
-				console.log(err)
+			.catch(error => {
+				console.log("Error updating movie! ", error);
 			})
-	}, [id])
+	}, [id]);
 
-	const changeHandler = ev => {
-		ev.persist();
-		let value = ev.target.value;
-		if (ev.target.name === 'metascore') {
+	const handleChange = event => {
+		event.persist();
+		let value = event.target.value;
+		if (event.target.name === 'metascore') {
 			value = parseInt(value, 10);
 		}
 
 		setMovie({
 			...movie,
-			[ev.target.name]: value
+			[event.target.name]: value
 		});
 	};
 
@@ -45,7 +48,7 @@ const MovieUpdate = () => {
 		axios
 			.put(`http://localhost:5000/api/movies/${id}`, movie)
 			.then(res => {
-				setMovie(initialItem)
+				setMovie(movieItem)
 				props.history.push('/')
 			})
 			.catch(err => console.log(err))
@@ -53,37 +56,37 @@ const MovieUpdate = () => {
 
 	return (
 		<div>
-			<h2 className="form">Add Movie</h2>
+			<h2 className="form">Update Movie</h2>
 			<form onSubmit={handleSubmit} className="form">
 				<label>Title</label>
 				<input
 					name="title"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.title}
+					value={movie.title}
 				/>
 				<label>Director</label>
 				<input
 					name="director"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.director}
+					value={movie.director}
 				/>
 				<label>Metascore</label>
 				<input
 					name="metascore"
 					type="text"
 					onChange={handleChange}
-					value={addMovie.metascore}
+					value={movie.metascore}
 				/>
 				<label>Stars</label>
 				<input
 					type="text"
 					name="Stars"
 					onChange={handleStars}
-					value={addMovie.stars}
+					value={movie.stars}
 				/>
-				<button>Add Movie</button>
+				<button>Submit</button>
 			</form>
 		</div>
 	);
