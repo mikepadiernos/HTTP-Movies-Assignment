@@ -1,6 +1,8 @@
 import React, { useState }  from "react";
 import { Route }            from "react-router-dom";
 
+import "./css/App.css"
+
 // IMPORT CONTEXT
 import MovieContext         from "./contexts/MovieContext";
 

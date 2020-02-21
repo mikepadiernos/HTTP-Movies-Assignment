@@ -85,7 +85,3 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
-.container {
-  width: calc(75% + 32px);
-  margin: 0 auto;
-}
