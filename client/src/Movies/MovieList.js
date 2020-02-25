@@ -12,14 +12,14 @@ export default class MovieList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/api/movies")
+      .get("http://localhost:5001/api/movies")
       .then(res => this.setState({ movies: res.data }))
       .catch(err => console.log(err.response));
   }
 
   render() {
     return (
-      <div className="movie-list">
+      <div className="cards-movies">
         {this.state.movies.map(movie => (
           <MovieDetails key={movie.id} movie={movie} />
         ))}
@@ -30,7 +30,7 @@ export default class MovieList extends Component {
 
 function MovieDetails({ movie }) {
   return (
-    <Link to={`/movies/${movie.id}`}>
+    <Link to={`/movies/${movie.id}`} className="card card-movie">
       <MovieCard movie={movie} />
     </Link>
   );
